@@ -1,5 +1,3 @@
-
-
 # KekikUdemy
 Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
  - https://www.discudemy.com/Turkish/
