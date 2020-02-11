@@ -129,3 +129,6 @@ Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
 - https://stackoverflow.com/questions/53625255/python-crawling-beautifulsoup-how-to-crawl-several-pages
 - https://stackoverflow.com/questions/33511544/how-to-get-rid-of-beautifulsoup-user-warning
 - https://stackoverflow.com/questions/26274724/filtering-urls-obtained-using-beautifulsoup
+
+#
+> Bu readme sayfası oluşturulurken [prose.io](http://prose.io/ "prose.io") ve [stackedit.io](https://stackedit.io/app "stackedit.io") araçlarından yardım alınmıştır..
