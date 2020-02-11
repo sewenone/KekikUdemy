@@ -4,6 +4,7 @@ Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
  - https://www.real.discount/new/
 
 # Kendi Botunu Yap
+[BotTaslak.py](https://github.com/KekikAkademi/KekikUdemy/blob/master/Karalamalar/BotTaslak.py "KekikUdemy Bot Taslağı")
 
     ###############################
     ##KekikUdemy Dökümantasyon#####
