@@ -68,7 +68,7 @@ Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
 > Real.Discount sitesine Udemy linkine ulaşmak için ikinci aşamaya  ihtiyacımız vardır. 
 > Bunun için; gelen `Linkler.txt` dosyasını tekrardan taramamız gerekmektedir.
 
-        ##########################################################################################################
+    ##########################################################################################################
     ###İkinci Aşama;###
     ###################################
     from bs4 import BeautifulSoup
