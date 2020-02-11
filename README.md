@@ -120,7 +120,7 @@ Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
 > Ardından `Udemylerce.txt` dosyasındaki eş satırları taratıp, silip `KekikUdemy.txt` dosyasını oluşturduk.
 
 
-### Bu bot Hazırlanırlen Faydalanılan Kaynaklar;
+### Bu bot Hazırlanırken Faydalanılan Kaynaklar;
 - https://github.com/raif-py/clickert
 - https://youtu.be/Vv_FX3FSvGo
 - https://stackoverflow.com/questions/9848889/colorama-for-python-not-returning-colored-print-lines-on-windows
