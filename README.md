@@ -118,3 +118,14 @@ Bu araç aşağıdaki adreslerden udemy kuponu çekmek için tasarlanmıştır.
 > Real.Discount sitesine Udemy `a href` bağlantıları birden fazla geçtiği için;
 > `Udemylerce.txt` diye bir .txt'ye kaydettik dönen linkleri.
 > Ardından `Udemylerce.txt` dosyasındaki eş satırları taratıp, silip `KekikUdemy.txt` dosyasını oluşturduk.
+
+
+### Bu bot Hazırlanırlen Faydalanılan Kaynaklar;
+- https://github.com/raif-py/clickert
+- https://youtu.be/Vv_FX3FSvGo
+- https://stackoverflow.com/questions/9848889/colorama-for-python-not-returning-colored-print-lines-on-windows
+- https://stackoverflow.com/questions/34610162/extract-all-links-from-a-web-page-using-python
+- https://pythonspot.com/extract-links-from-webpage-beautifulsoup/
+- https://stackoverflow.com/questions/53625255/python-crawling-beautifulsoup-how-to-crawl-several-pages
+- https://stackoverflow.com/questions/33511544/how-to-get-rid-of-beautifulsoup-user-warning
+- https://stackoverflow.com/questions/26274724/filtering-urls-obtained-using-beautifulsoup
