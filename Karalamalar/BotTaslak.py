@@ -81,7 +81,7 @@ for UdemyVer in Udemy:
         ##Hemen Burda Dönen Linkleri Kaydet######
         #########################################
         print("\tUdemy Linkler İşleniyor..")
-        GelenUdemyKaydet = open("Udemylerce.txt", "a") ## Belki Eş Gelen Linkler Vardır.
+        GelenUdemyKaydet = open("Udemylerce.txt", "a") ## Silinecek Eş Gelen Linkler Var!!
         GelenUdemyKaydet.write(GelenUdemy + "\n")
         GelenUdemyKaydet.close()
 print("\n\t\tUdemylerce.txt Kaydedildi..\n")
@@ -89,7 +89,7 @@ os.remove("Linkler.txt")
 print("\n\t\tLinkler.txt Silindi\n") ## Birinci Aşamada Çektiğimiz Gereksiz Linkler
 ##########################################################################################
 ############################################################
-        ##Eş Gelen Linkleri Silelim###############
+##Eş Gelen Linkleri Silelim#######################
 ##################################################
 print("\n\t\tÇift Linkler Siliniyor..\n")
 BenzerLink = set() # Bütün Satırları Tut
