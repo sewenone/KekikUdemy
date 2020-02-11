@@ -1,7 +1,8 @@
 ###############################
+##KekikUdemy Dökümantasyon#####
+###############################
 import requests, bs4, lxml, re
 ###############################
-
 ###################################################
 URL = 'https://www.real.discount/new/'
 SayfaAl = requests.get(URL)
