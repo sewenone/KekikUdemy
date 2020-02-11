@@ -8,24 +8,25 @@ import ctypes   #Ctypes yabancı(dışarıdan) olan fonksiyonların kullanılmas
                 #Windows platformunda dynamic link libraries (DLL) dediğimiz,
                 #Linux’da ise shared objects (SO) dediğimiz derlenmiş binary kütüphanelerden fonksiyon çağırmaya yarar.
 
-##################################################################
+#########################################################################################
 isim = os.getlogin()
 platform = platform.system()
 renk = random.choice(["\033[31m","\033[32m","\033[33m","\033[34m","\033[35m","\033[36m"])
-##################################################################
+#########################################################################################
 
-##################################################################
+##############################
 def temizle():
     if platform == "Windows":
         os.system("cls")
     else:
         os.system("clear")
-##################################################################
+##############################
 
-##################################################################
 temizle()
+
+####################################################################################################################
 try:
-    from colorama import init, Fore, Back, Style
+    from colorama import init, Fore, Back, Style ## https://stackoverflow.com/questions/9848889/colorama-for-python-not-returning-colored-print-lines-on-windows
 except ImportError:
     print(f"\t\t\033[32mHoşgeldin {renk}{isim}\033[32m Lütfen Bekle ...\033[0m")
     print(f"\tGörünüşe göre colorama yüklü değil :/ . \n\t\tEndişelenme Python'u doğru kurduysan yükleyebilirim ")
@@ -33,20 +34,20 @@ except ImportError:
     print(f"\t\t {renk} Colorama Başarıyla Kuruldu!\n\033[0m")
     time.sleep(3)
     temizle()
-    ##############################
+    ############################################
     from colorama import init, Fore, Back, Style ## https://stackoverflow.com/questions/9848889/colorama-for-python-not-returning-colored-print-lines-on-windows
-    ##############################
+    ################################################################################################################
 
-##################################################################
 init()
-##################################################################
+
+####################################################################################
 if platform == "Windows":
-    ctypes.windll.kernel32.SetConsoleTitleW("@KekikAkademi Udemy Kupon Çekme Aracı")
+    ctypes.windll.kernel32.SetConsoleTitleW("@KekikAkademi UDEMY Kupon Çekme Aracı")
 elif platform == "Android":
     clear
 else:
-    os.system('title @KekikAkademi Udemy Kupon Çekme Aracı')
-##################################################################
+    os.system('title @KekikAkademi UDEMY Kupon Çekme Aracı')
+#####################################################################################
 
 text = '''
 #   _    _      _     _ _        _     _     _                   
@@ -62,9 +63,9 @@ print("\t\t{}| {} |".format(renk,isim) + Fore.YELLOW + ' Oturumundayız..\n')
 print(Fore.CYAN + '\t[1] Discudemy TR Linkleri (3 Sayfa Tarar)\n\t[2] RealDiscount Linkleri (4 Sayfa Tarar)\n\t[3] Çekilenleri Udemy e Çevir\n' + Fore.WHITE, end='')
 option = str(input("\n>> "))
 
-##################################################################
+#################
 if option == '1':
-##################################################################
+#################
     temizle()
     try:
         from bs4 import BeautifulSoup
@@ -84,7 +85,7 @@ if option == '1':
         from bs4 import BeautifulSoup
         import requests, bs4, lxml, re
     ############################## https://stackoverflow.com/questions/34610162/extract-all-links-from-a-web-page-using-python
-    ############################## https://pythonspot.com/extract-links-from-webpage-beautifulsoup/
+    ################## https://pythonspot.com/extract-links-from-webpage-beautifulsoup/
     taranacakSayfa = 3 ## https://stackoverflow.com/questions/53625255/python-crawling-beautifulsoup-how-to-crawl-several-pages
     for SayfaNumarasi in range(1, taranacakSayfa+1):
         URL = 'https://www.discudemy.com/language/Turkish/{}'.format(SayfaNumarasi)
@@ -94,7 +95,7 @@ if option == '1':
         for DiscudemyLinkler in soup.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/Turkish/")}): ## https://stackoverflow.com/questions/26274724/filtering-urls-obtained-using-beautifulsoup
             GelenDiscudemy = DiscudemyLinkler['href']
             print(GelenDiscudemy)
-            #####################
+            ######################################################
             print(Fore.RED + "\tLinkler İşleniyor.." + Fore.WHITE)
             GelenDiscudemyKaydet = open("GelenDiscudemy.txt", "a")
             GelenDiscudemyKaydet.write(GelenDiscudemy + "\n")
@@ -102,7 +103,7 @@ if option == '1':
     print("\n\t\t" + Fore.GREEN + "GelenDiscudemy.txt Kaydedildi.." + Fore.WHITE + "\n")
     print("\n\t\t" + Fore.YELLOW + "İkinci Aşamaya Geçiliyor.." + Fore.WHITE + "\n")
     time.sleep(1)
-#################################################################################################################
+    #################################################################################################################
     DiscUdemyGo = open("GelenDiscudemy.txt").readlines() # DiscUdemyGo bir liste oldu [ ]
     for DiscUdemyGoVer in DiscUdemyGo:
     #   print(DiscUdemyGoVer)  # DiscUdemyGo'daki listenin her birini for döngüsü ile çıkardık ve yazdırdık
@@ -114,7 +115,7 @@ if option == '1':
         for DiscUdemyGoLinkler in DiscUdemyGoSoup.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/go/")}): ## https://stackoverflow.com/questions/26274724/filtering-urls-obtained-using-beautifulsoup
             GelenDiscUdemyGo = DiscUdemyGoLinkler['href']
             print(GelenDiscUdemyGo)
-            #####################
+            #######################
             print(Fore.RED + "\tLinkler İşleniyor.." + Fore.WHITE)
             GelenDiscUdemyGoKaydet = open("UdemyeGiderken.txt", "a")
             GelenDiscUdemyGoKaydet.write(GelenDiscUdemyGo + "\n")
@@ -124,11 +125,11 @@ if option == '1':
     print("\n\t\t" + Fore.YELLOW + "GelenDiscudemy.txt Gereksiz Olduğu İçin Silindi.." + Fore.WHITE + "\n")
     time.sleep(1)
     os.system("python KekikUdemy.py")
-##################################################################
+    #################################
 
-##################################################################
+#################
 if option == '2':
-##################################################################
+#################
     import requests, bs4, lxml, re
     from bs4 import BeautifulSoup
     ############################## https://stackoverflow.com/questions/34610162/extract-all-links-from-a-web-page-using-python
@@ -149,7 +150,7 @@ if option == '2':
             GelenDiscountKaydet.close()
     print("\n\t\t" + Fore.GREEN + "UdemyeGiderkenDisc.txt Kaydedildi.." + Fore.WHITE + "\n")
     time.sleep(1)
-    ###########################################################################
+    ##############################################################################
     print("\n\t\t" + Fore.YELLOW + "Çift Linkler Siliniyor.." + Fore.WHITE + "\n")
     lines_seen = set() # holds lines already seen
     outfile = open("UdemyeGiderken.txt", "a")
@@ -166,9 +167,9 @@ if option == '2':
     time.sleep(1)
     os.system("python KekikUdemy.py")
 
-##################################################################
+#################
 if option == '3':
-##################################################################
+#################
     import requests, bs4, lxml, re
 
     Udemy = open("UdemyeGiderken.txt").readlines() # Udemy bir liste oldu [ ]
@@ -206,4 +207,3 @@ if option == '3':
     print("\n\t\t" + Fore.CYAN + "BelkiUdemy.txt Silindi" + Fore.WHITE + "\n")
     ###########################################################################
     print("\n\t\t" + Fore.YELLOW + "KekikUdemy.txt Kaydedildi!!!" + Fore.WHITE + "\n")
-    
