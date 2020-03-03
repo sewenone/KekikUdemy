@@ -27,10 +27,12 @@ temizle()
 ####################################################################################################################
 try:
     from colorama import init, Fore, Back, Style ## https://stackoverflow.com/questions/9848889/colorama-for-python-not-returning-colored-print-lines-on-windows
+    import lxml
 except ImportError:
     print(f"\t\t\033[32mHoşgeldin {renk}{isim}\033[32m Lütfen Bekle ...\033[0m")
     print(f"\tGörünüşe göre colorama yüklü değil :/ . \n\t\tEndişelenme Python'u doğru kurduysan yükleyebilirim ")
     os.system("pip install colorama")
+    os.system("pip install lxml")
     print(f"\t\t {renk} Colorama Başarıyla Kuruldu!\n\033[0m")
     time.sleep(3)
     temizle()
