@@ -185,16 +185,17 @@ def AcilisSayfasi():
     #########################
     elif secenek == '2':    # Eğer 2 yi seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
+        print(Fore.LIGHTBLUE_EX + logo)
         print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
-        print("Telegram Bot Testi\n")
-        TelegramBot()       # TelegramBot fonksiyonunu çalıştır
+        print("Bu işlem henüz hazır değil..")
+        AcilisSayfasi()
     #########################
     elif secenek == '3':    # Eğer 3 ü seçerse
-        while True:         # Sonsuz döngü başlat
-            Temizle()       # Temizle fonksiyonunu çalıştır
-            print(ust_bilgi)# Üst Bilgi fonksiyonunu çalıştır
-            print("Telegram Udemy Botu\n")
-            TelegramUdemy()# TelegramUdemy fonksiyonunu çalıştır
+        Temizle()           # Temizle fonksiyonunu çalıştır
+        print(Fore.LIGHTBLUE_EX + logo)
+        print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
+        print("Bu işlem henüz hazır değil..")
+        AcilisSayfasi()
     #########################
     else:                   # Eğer harici bişey seçerse
         pass                # Aldırış etme (çökme)
