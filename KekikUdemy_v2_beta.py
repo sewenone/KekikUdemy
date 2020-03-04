@@ -19,6 +19,7 @@ try:                                        # Dene
     import re                       # Ayrıştırıcı Arkadaş
 except ModuleNotFoundError:                 # Modül bulunamadıysa
     try:                                    # Dene
+        print("\n\tEksik modüllerin varmış,\n\t\tSenin için pip3 ile yüklemeyi deniyorum..")
         os.system("pip3 install platform")  # pip3 ile Yüklemeyi
         os.system("pip3 install datetime")  # pip3 ile Yüklemeyi
         os.system("pip3 install pytz")      # pip3 ile Yüklemeyi
@@ -28,6 +29,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
         os.system("pip3 install bs4")       # pip3 ile Yüklemeyi
         os.system("pip3 install re")        # pip3 ile Yüklemeyi
     except:                                 # pip3 yüklemediyse
+        print("\n\tpip3 ile yükleyemedim,\n\t\tpip ile yüklemeyi deniyorum..")
         os.system("pip install platform")   # pip ile Yüklemeyi
         os.system("pip install datetime")   # pip ile Yüklemeyi
         os.system("pip install pytz")       # pip ile Yüklemeyi
@@ -47,6 +49,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
         import requests                 # Websitelerine istek atmamızı sağlayacak arkadaş
         from bs4 import BeautifulSoup   # HTML veya XML dosyalarını işleyen arkadaş
         import re                       # Ayrıştırıcı Arkadaş
+        print(f"\n\t{Fore.GREEN}Modül yükleme işini hallettik!")
     except Exception as hata:               # Hala hata var ise
         sys.exit(f"{Fore.RED}Modüller yüklenemedi !\n\n{Fore.CYAN}Log : {Fore.LIGHTBLACK_EX}{hata}") # Kapat(yazdır)
 ########################################################################################################################
