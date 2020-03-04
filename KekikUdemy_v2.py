@@ -179,8 +179,8 @@ def CiftLinkSil():
     ###########################################################################
     print("\n\t\t" + Fore.YELLOW + "Çift Linkler Siliniyor.." + Fore.WHITE + "\n")
     lines_seen = set() # holds lines already seen
-    outfile = open("UdemyeGiderken.txt", "a")
-    for line in open("Udemy_KekikAkademi.txt", "r"):
+    outfile = open("Udemy_KekikAkademi.txt", "a")
+    for line in open("UdemyeGiderken.txt", "r"):
         if line not in lines_seen: # not a duplicate
             outfile.write(line)
             lines_seen.add(line)
@@ -209,6 +209,7 @@ def AcilisSayfasi():
         print(Fore.LIGHTBLUE_EX + logo)
         print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
         DiscUdemy()         # DiscUdemy fonksiyonunu çalıştır
+        AcilisSayfasi()
     #########################
     elif secenek == '2':    # Eğer 2 yi seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
