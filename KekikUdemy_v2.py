@@ -170,13 +170,36 @@ def DiscUdemy():
 ########################################################################################################################
 
 ########################################################################################################################
+def RealDiscount():
+    print("Henüz Hazır Değil..")
+########################################################################################################################
+
+########################################################################################################################
+def CiftLinkSil():
+    ###########################################################################
+    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Siliniyor.." + Fore.WHITE + "\n")
+    lines_seen = set() # holds lines already seen
+    outfile = open("UdemyeGiderken.txt", "a")
+    for line in open("Udemy_KekikAkademi.txt", "r"):
+        if line not in lines_seen: # not a duplicate
+            outfile.write(line)
+            lines_seen.add(line)
+    outfile.close()
+    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Silindi.." + Fore.WHITE + "\n")
+    os.remove("UdemyeGiderken.txt")
+    print("\n\t\t" + Fore.CYAN + "UdemyeGiderken.txt Silindi" + Fore.WHITE + "\n")
+    ###########################################################################
+    print("\n\t\t" + Fore.YELLOW + "Udemy_KekikAkademi.txt Kaydedildi!!!" + Fore.WHITE + "\n")
+########################################################################################################################
+
+########################################################################################################################
 def AcilisSayfasi():
     print(Fore.GREEN + logo)        # yeşil renk koduyla logomuzu yazdırdık
     print(ust_bilgi)                # Üst Bilgimizi yazdırdık
     print(f"""
     {Fore.GREEN}[{Fore.YELLOW} 1 {Fore.GREEN}] {Fore.CYAN}Discudemy TR Linkleri (3 Sayfa Tarar)
     {Fore.GREEN}[{Fore.YELLOW} 2 {Fore.GREEN}] {Fore.CYAN}RealDiscount Linkleri (4 Sayfa Tarar) (eklenecek)
-    {Fore.GREEN}[{Fore.YELLOW} 3 {Fore.GREEN}] {Fore.CYAN}Çekilenleri Udemy e Çevir (eklenecek
+    {Fore.GREEN}[{Fore.YELLOW} 3 {Fore.GREEN}] {Fore.CYAN}Çift Linkleri Sil
     """) # Seçeneklerimizi ayarladık
 
     secenek = str(input(f"{Fore.RED}{oturum}{Fore.LIGHTBLUE_EX} >> {Fore.GREEN}")) # Kullanıcı için input oluşturduk
@@ -191,15 +214,14 @@ def AcilisSayfasi():
         Temizle()           # Temizle fonksiyonunu çalıştır
         print(Fore.LIGHTBLUE_EX + logo)
         print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
-        print("Bu işlem henüz hazır değil..")
+        RealDiscount()      # RealDiscount fonksiyonunu çalıştır
         AcilisSayfasi()
     #########################
     elif secenek == '3':    # Eğer 3 ü seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
         print(Fore.LIGHTBLUE_EX + logo)
         print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
-        print("Bu işlem henüz hazır değil..")
-        AcilisSayfasi()
+        CiftLinkSil()       # CiftLinkSil fonksiyonunu çalıştır
     #########################
     else:                   # Eğer harici bişey seçerse
         pass                # Aldırış etme (çökme)
