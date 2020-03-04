@@ -164,7 +164,7 @@ def DiscUdemy():
     satir = 0
     for line in satir_say:
         satir = satir+1
-    print(f"\n\t{Fore.GREEN} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir} ")
+    print(f"\n\t{Fore.GREEN} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir}")
     satir_say.close()
     ###########################################################################################
 ########################################################################################################################
@@ -184,16 +184,14 @@ def CiftLinkSil():
             outfile.write(line)
             lines_seen.add(line)
     outfile.close()
-    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Silindi.." + Fore.WHITE + "\n")
     os.remove("UdemyeGiderken.txt")
-    ###########################################################################
-    print("\n\t\t" + Fore.YELLOW + "Udemy_KekikAkademi.txt Kaydedildi!!!" + Fore.WHITE + "\n")
+    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Bulunup Silindi ve Udemy_KekikAkademi.txt Kaydedildi!!!" + Fore.WHITE + "\n")
     ###########################################################################################
     satir_say = open("Udemy_KekikAkademi.txt")
     satir = 0
     for line in satir_say:
         satir = satir+1
-    print(f"\n\t{Fore.GREEN} Kalan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir} ")
+    print(f"\n\t{Fore.GREEN} Kalan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir}")
     satir_say.close()
     ###########################################################################################
 ########################################################################################################################
