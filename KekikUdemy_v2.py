@@ -131,7 +131,7 @@ def DiscUdemy():
     for sayfa in range(1, 3): # ilk döngü /language/Turkish için
         sayfa = str(sayfa)    # int olan değerimizi str yapıyoruz
         link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
-        print(f"\t{Fore.LIGHTBLACK_EX}[*] {link} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
+        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED} Burdayım !")
         
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
         
@@ -190,6 +190,15 @@ def CiftLinkSil():
     print("\n\t\t" + Fore.CYAN + "UdemyeGiderken.txt Silindi" + Fore.WHITE + "\n")
     ###########################################################################
     print("\n\t\t" + Fore.YELLOW + "Udemy_KekikAkademi.txt Kaydedildi!!!" + Fore.WHITE + "\n")
+    
+    ###########################################################################################
+    satir_say = open("Udemy_KekikAkademi.txt")
+    satir = 0
+    for line in satir_say:
+        satir = satir+1
+    print(f"\n\t{Fore.GREEN} Kalan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir} ")
+    satir_say.close()
+    ###########################################################################################
 ########################################################################################################################
 
 ########################################################################################################################
