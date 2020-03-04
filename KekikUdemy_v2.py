@@ -154,9 +154,9 @@ def DiscUdemy():
                     print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN} Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
                     
                     ############################################################
-                    gelen_discudemy_go_kaydet = open("UdemyeGiderken.txt", "a")
-                    gelen_discudemy_go_kaydet.write(gelen_udemy + "\n")
-                    gelen_discudemy_go_kaydet.close()
+                    gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
+                    gelen_udemy_kaydet.write(gelen_udemy + "\n")
+                    gelen_udemy_kaydet.close()
                     ############################################################
                     
     ###########################################################################################
@@ -191,9 +191,9 @@ def RealDiscount():
                 print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN} Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
                 
                 ############################################################
-                gelen_discudemy_go_kaydet = open("UdemyeGiderken.txt", "a")
-                gelen_discudemy_go_kaydet.write(gelen_udemy + "\n")
-                gelen_discudemy_go_kaydet.close()
+                gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
+                gelen_udemy_kaydet.write(gelen_udemy + "\n")
+                gelen_udemy_kaydet.close()
                 ############################################################
                 
     ###########################################################################################
