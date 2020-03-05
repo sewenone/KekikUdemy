@@ -239,8 +239,15 @@ def AcilisSayfasi():
     {Fore.GREEN}[{Fore.YELLOW} 1 {Fore.GREEN}] {Fore.CYAN}Discudemy TR Linkleri (3 Sayfa Tarar)
     {Fore.GREEN}[{Fore.YELLOW} 2 {Fore.GREEN}] {Fore.CYAN}RealDiscount Linkleri (2 Sayfa Tarar)
     """) # Seçeneklerimizi ayarladık
-
-    secenek = str(input(f"{Fore.RED}{oturum}{Fore.LIGHTBLUE_EX} >> {Fore.GREEN}")) # Kullanıcı için input oluşturduk
+    
+    konum = os.getcwd()
+    if isletim_sistemi == "Windows":
+        konum = konum.split("\\")
+    elif isletim_sistemi == "Linux":
+        konum = konum.split("/")
+    else:
+        konum = "/"
+    secenek = str(input(f"{Fore.RED}{oturum}:{Fore.LIGHTBLUE_EX}~/../{konum[-1]} >> {Fore.GREEN}")) # Kullanıcı için input oluşturduk
     #########################
     if secenek == '1':      # Eğer 1 i seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
