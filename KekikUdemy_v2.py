@@ -134,7 +134,7 @@ def DiscUdemy():
     for sayfa in range(1, 3): # ilk döngü /language/Turkish için
         sayfa = str(sayfa)    # int olan değerimizi str yapıyoruz
         link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
-        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED} Burdayım !")
+        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")
         
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
         
@@ -142,19 +142,19 @@ def DiscUdemy():
         kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
         for discudemy_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/Turkish/")}): # Turkish/kurs-adi
             gelen_discudemy = discudemy_linkler['href']
-            print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
+            print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
             
             discudemy_go_html = requests.get(gelen_discudemy, headers=kimlik)
             discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib')
             for discudemy_go_linkler in discudemy_go_kaynak.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/go/")}): # go/kurs-adi
                 gelen_discudemy_go = discudemy_go_linkler['href']
-                print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy_go} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
+                print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy_go} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
                 
                 udemy_html = requests.get(gelen_discudemy_go, headers=kimlik)
                 udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
                 for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
                     gelen_udemy = udemy_linkler['href']
-                    print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN} Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
+                    print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN}Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
                     
                     ############################################################
                     gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
@@ -177,7 +177,7 @@ def RealDiscount():
     for sayfa in range(1, 2):
         sayfa = str(sayfa)    # int olan değerimizi str yapıyoruz
         link = 'https://www.real.discount/new/' + sayfa    # sayfalar arasında gezinmek için
-        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED} Burdayım !")
+        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")
         
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
         
@@ -185,13 +185,13 @@ def RealDiscount():
         kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
         for discount_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.real.discount/offer/")}):
             gelen_discount = discount_linkler['href']
-            print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discount} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
+            print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discount} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
                 
             udemy_html = requests.get(gelen_discount, headers=kimlik)
             udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
             for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
                 gelen_udemy = udemy_linkler['href']
-                print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN} Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
+                print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN}Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
                 
                 ############################################################
                 gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
