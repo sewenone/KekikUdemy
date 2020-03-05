@@ -6,7 +6,7 @@
 ########################################################################################################################
 ## ModulYukle
 # https://github.com/raif-py/pentester/blob/master/PentesterBeta.py
-try:                                        # Dene
+try:                                # Dene
     import os                       # Dizinler ve dosyalarla çalışmak için
     import platform                 # Çalışılan makine bilgisi sağlayacak arkadaş
     import time,datetime,pytz       # Zaman/Tarih Bilgisi sağlayacak arkadaşlar
@@ -15,7 +15,8 @@ try:                                        # Dene
     from colorama import Fore       # Boyamayı kolaylaştıran arkadaş (BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE)
     colorama.init(autoreset=True)   # Renklerin ilgili satırdan başka satıra devam etmemesi için
     import requests                 # Websitelerine istek atmamızı sağlayacak arkadaş
-    from bs4 import BeautifulSoup   # HTML veya XML dosyalarını işleyen arkadaş
+    from bs4 import BeautifulSoup   # HTML veya XML dosyalarını okuyan arkadaş
+    import html5lib                 # HTML dosyalarını işleyen arkadaş
     import re                       # Ayrıştırıcı Arkadaş
 except ModuleNotFoundError:                 # Modül bulunamadıysa
     try:                                    # Dene
@@ -28,6 +29,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
         os.system("pip3 install requests")  # pip3 ile Yüklemeyi
         os.system("pip3 install bs4")       # pip3 ile Yüklemeyi
         os.system("pip3 install re")        # pip3 ile Yüklemeyi
+        os.system("pip3 install html5lib")  # pip3 ile Yüklemeyi
     except:                                 # pip3 yüklemediyse
         print("\n\tpip3 ile yükleyemedim,\n\t\tpip ile yüklemeyi deniyorum..")
         os.system("pip install platform")   # pip ile Yüklemeyi
@@ -38,6 +40,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
         os.system("pip install requests")   # pip ile Yüklemeyi
         os.system("pip install bs4")        # pip ile Yüklemeyi
         os.system("pip install re")         # pip ile Yüklemeyi
+        os.system("pip install html5lib")   # pip ile Yüklemeyi
     try:                                    # Tekrar dene
         import os                       # Dizinler ve dosyalarla çalışmak için
         import platform                 # Çalışılan makine bilgisi sağlayacak arkadaş
@@ -56,7 +59,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
 
 ########################################################################################################################
 ## GenelDegiskenler
-pencere_basligi = "@KekikAkademi UDEMY Kupon Çekme Aracı"                        # Pencere Başlığımız
+pencere_basligi = "@KekikAkademi UDEMY Kupon Çekme Aracı"        # Pencere Başlığımız
 logo = '''
    _    _      _     _ _        _     _     _                   
   | |  / )    | |   (_) |      | |   | |   | |                  
@@ -65,7 +68,7 @@ logo = '''
   | | \ ( (/ /| |< (| | |< (   | |___| ( (_| ( (/ /| | | | |_| |
   |_|  \_)____)_| \_)_|_| \_)   \______|\____|\____)_|_|_|\__  |
                                                          (____/   
-'''                                                                   # Logomuz
+'''                                                               # Logomuz
         # logo = http://patorjk.com/software/taag/#p=display&f=Doom&t=kopya%20Kagidi
 #######################################################################################
 try:
@@ -76,12 +79,12 @@ except:
 bilgisayar_adi = platform.node()                                      # Bilgisayar Adı
 oturum = kullanici_adi + "@" + bilgisayar_adi                         # Örn.: "kekik@Administrator"
 
-isletim_sistemi = platform.system()                                             # İşletim Sistemi
-bellenim_surumu = platform.release()                                            # Sistem Bellenim Sürümü
-cihaz = isletim_sistemi + " | " + bellenim_surumu                               # Örn.: "Windows | 10"
+isletim_sistemi = platform.system()                                        # İşletim Sistemi
+bellenim_surumu = platform.release()                                       # Sistem Bellenim Sürümü
+cihaz = isletim_sistemi + " | " + bellenim_surumu                          # Örn.: "Windows | 10"
 
-tarih = datetime.datetime.now(pytz.timezone("Turkey")).strftime("%d-%m-%Y")     # Bugünün Tarihi
-saat = datetime.datetime.now(pytz.timezone("Turkey")).strftime("%H:%M")         # Bugünün Saati
+tarih = datetime.datetime.now(pytz.timezone("Turkey")).strftime("%d-%m-%Y") # Bugünün Tarihi
+saat = datetime.datetime.now(pytz.timezone("Turkey")).strftime("%H:%M")     # Bugünün Saati
 zaman = tarih + " | " + saat
 
 ip_req = requests.get('http://ip.42.pl/raw')    # Harici IP'yi bulmak için bir GET isteği yolluyoruz
@@ -90,7 +93,7 @@ ip = ip_req.text                                # ip Adresi
 ust_bilgi = f"""
     {Fore.LIGHTBLACK_EX}{kullanici_adi} | {cihaz} | {Fore.LIGHTGREEN_EX}{ip} 
           {Fore.YELLOW}{zaman}
-    """                                                               # Üst Bilgimiz
+    """                                         # Üst Bilgimiz
 ########################################################################################################################
 
 ########################################################################################################################
@@ -103,20 +106,20 @@ Temizle()                               # Temizle fonksiyonumuzu çağırdık
 ########################################################################################################################
 
 ########################################################################################################################
-def PencereBasligi():                                                               # PencereBasligi fonksiyonu
-    if isletim_sistemi == "Windows":                                                # Eğer İşletim Sistemi "Windows" ise
+def PencereBasligi():                                                       # PencereBasligi fonksiyonu
+    if isletim_sistemi == "Windows":                                        # Eğer İşletim Sistemi "Windows" ise
         ctypes.windll.kernel32.SetConsoleTitleW(f"{pencere_basligi}")       # Konsol Başlığını ayarla
-    elif isletim_sistemi == "Android":                                              # Eğer İşletim Sistemi "Android" ise
-        os.system("clear")                                                          # Sisteme "clear" komutu gönder
-    elif isletim_sistemi == "Linux":                                                # Eğer İşletim Sistemi "Linux" ise
+    elif isletim_sistemi == "Android":                                      # Eğer İşletim Sistemi "Android" ise
+        os.system("clear")                                                  # Sisteme "clear" komutu gönder
+    elif isletim_sistemi == "Linux":                                        # Eğer İşletim Sistemi "Linux" ise
         os.system(f'echo "\033]0;{pencere_basligi}\007"')                   # Başlık Ayarla
-    else:                                                                           # Hiçbiri değil ise
+    else:                                                                   # Hiçbiri değil ise
         os.system(f'title {pencere_basligi}')                               # Başlık Ayarla
-PencereBasligi()                                                                    # PencereBasligi çağır
+PencereBasligi()                                                            # PencereBasligi çağır
 ########################################################################################################################
 
 ########################################################################################################################
-def WindowsBildirimi(): # WindowsBildirimi adında bir metod oluşturduk
+def WindowsBildirimi():                              # WindowsBildirimi adında bir metod oluşturduk
     if isletim_sistemi == "Windows":
         from win10toast import ToastNotifier         # Windows'a bildirim göndermek için
         bildirim = ToastNotifier()
@@ -136,7 +139,7 @@ def DiscUdemy():
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
         
         html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
-        kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html.parser'i kullandık
+        kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
         for discudemy_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/Turkish/")}): # Turkish/kurs-adi
             gelen_discudemy = discudemy_linkler['href']
             print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
@@ -179,7 +182,7 @@ def RealDiscount():
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
         
         html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
-        kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html.parser'i kullandık
+        kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
         for discount_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.real.discount/offer/")}):
             gelen_discount = discount_linkler['href']
             print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discount} {Fore.CYAN}| {Fore.LIGHTBLACK_EX} Burdayım !")
