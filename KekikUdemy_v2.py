@@ -247,7 +247,7 @@ def AcilisSayfasi():
         konum = konum.split("/")
     else:
         konum = "/"
-    secenek = str(input(f"{Fore.RED}{oturum}:{Fore.LIGHTBLUE_EX}~/../{konum[-1]} >> {Fore.GREEN}")) # Kullanıcı için input oluşturduk
+    secenek = str(input(f"{Fore.RED}{oturum}:{Fore.LIGHTBLUE_EX}~/../{konum[-2] + '/' + konum[-1]} >> {Fore.GREEN}")) # Kullanıcı için input oluşturduk
     #########################
     if secenek == '1':      # Eğer 1 i seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
