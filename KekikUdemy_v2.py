@@ -120,7 +120,7 @@ PencereBasligi()                                                            # Pe
 
 ########################################################################################################################
 def WindowsBildirimi():                              # WindowsBildirimi adında bir metod oluşturduk
-    if isletim_sistemi == "Windows":
+    if isletim_sistemi == "Windows" and bellenim_surumu >= "10":    # Windows ve 10'a büyük eşitse
         from win10toast import ToastNotifier         # Windows'a bildirim göndermek için
         bildirim = ToastNotifier()
         bildirim.show_toast(f"{pencere_basligi}", "Başlıyoruz :)", icon_path=None, duration=10, threaded=True)

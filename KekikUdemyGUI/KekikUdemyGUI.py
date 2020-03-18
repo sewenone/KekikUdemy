@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+#! -*- coding: utf-8 -*-
+# Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
+# @raifpy > Ömer Rai'ye Sonsuz Teşekkürler..
+
 import os                           # Dizinler ve dosyalarla çalışmak için
 import platform                     # Çalışılan makine bilgisi sağlayacak arkadaş
 import time, datetime, pytz         # Zaman/Tarih Bilgisi sağlayacak arkadaşlar
@@ -33,7 +38,8 @@ zaman = tarih + " | " + saat                                                    
 ip_req = requests.get('http://ip.42.pl/raw')    # Harici IP'yi bulmak için bir GET isteği yolluyoruz    #
 ip = ip_req.text                                # ip Adresi                                             #
                                                                                                         #
-ust_bilgi = f"{kullanici_adi} | {cihaz} | {ip} \n\t{zaman}"  # Üst Bilgimiz                             #
+ust_bilgi = f"{kullanici_adi} | {cihaz} | {ip} \n\t{zaman}"     # Üst Bilgimiz                          #
+pencere_basligi = "KekikUdemy Kupon Botu GUI | @KekikAkademi"   # Pencere Başlığımız                    #
 #########################################################################################################
 ########################################################################################################################
 def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adında bir fonksiyon oluşturduk
@@ -44,7 +50,7 @@ def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adı
     else:                                           # Eğer İşletim Sistemi "Windows" değilse
         pass                                        # Boşver :)
 WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin
-                            # -- pyinstaller -i udemy.ico --onefile --noconsole UdemyArayuz.py --
+                            # -- pyinstaller -i udemy.ico --onefile --noconsole KekikUdemyGUI.py --
 ########################################################################################################################
 #####################################
 class Pencere(QWidget):             # Penceremizi Oluşturduk
@@ -62,7 +68,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         realDiscount = QPushButton()
 
         # Başlık
-        baslik.setText('<h1><font color="green">KekikUdemy Kupon Botu</font></h1>')
+        baslik.setText(f'<h1><font color="green">{pencere_basligi}</font></h1>')
         baslik.setFont(QFont("Helvatica",15,QFont.Bold))
         baslik.setAlignment(Qt.AlignCenter)
 
@@ -105,7 +111,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         self.setLayout(v_box)
 #########################################################
         self.show()                                     # Pencereyi göster
-        self.setWindowTitle("KekikUdemy Kupon Botu GUI")# Pencere Başlığımızı Belirledik
+        self.setWindowTitle(f"{pencere_basligi}")# Pencere Başlığımızı Belirledik
         self.setWindowIcon(QIcon("img/udemy.png"))      # Pencere İkonumuzu Belirledik
         self.setMinimumSize(QSize(750, 500))            # Pencere Min. Ebat Tanımladık
         self.setMaximumSize(QSize(750, 750))            # Pencere Max. Ebat Tanımladık
