@@ -111,7 +111,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         self.setLayout(v_box)
 #########################################################
         self.show()                                     # Pencereyi göster
-        self.setWindowTitle(f"{pencere_basligi}")# Pencere Başlığımızı Belirledik
+        self.setWindowTitle(f"{pencere_basligi}")       # Pencere Başlığımızı Belirledik
         self.setWindowIcon(QIcon("img/udemy.png"))      # Pencere İkonumuzu Belirledik
         self.setMinimumSize(QSize(750, 500))            # Pencere Min. Ebat Tanımladık
         self.setMaximumSize(QSize(750, 750))            # Pencere Max. Ebat Tanımladık
