@@ -3,14 +3,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 # @raifpy > Ömer Rai'ye Sonsuz Teşekkürler..
 
-import os                           # Dizinler ve dosyalarla çalışmak için
-import platform                     # Çalışılan makine bilgisi sağlayacak arkadaş
-import time, datetime, pytz         # Zaman/Tarih Bilgisi sağlayacak arkadaşlar
-import requests                     # Websitelerine istek atmamızı sağlayacak arkadaş
-
-from bs4 import BeautifulSoup       # HTML veya XML dosyalarını okuyan arkadaş
-import html5lib                     # HTML dosyalarını işleyen arkadaş
-import re                           # Ayrıştırıcı Arkadaş
 #################################
 from PyQt5.QtCore import *      #
 from PyQt5.QtGui import *       #
@@ -18,6 +10,11 @@ from PyQt5.QtWidgets import *   #
 import sys                      #
 #################################
 #########################################################################################################
+import os                           # Dizinler ve dosyalarla çalışmak için                              #
+import platform                     # Çalışılan makine bilgisi sağlayacak arkadaş                       #
+import time, datetime, pytz         # Zaman/Tarih Bilgisi sağlayacak arkadaşlar                         #
+import requests                     # Websitelerine istek atmamızı sağlayacak arkadaş                   #
+#-------------------------------------------------------------------------------------------------------#
 try:                                                                                                    #
     kullanici_adi = os.getlogin()                               # Kullanıcı Adı                         #
 except:                                                                                                 #
@@ -40,18 +37,17 @@ ip = ip_req.text                                # ip Adresi                     
                                                                                                         #
 ust_bilgi = f"{kullanici_adi} | {cihaz} | {ip} \n\t{zaman}"     # Üst Bilgimiz                          #
 pencere_basligi = "KekikUdemy Kupon Botu GUI | @KekikAkademi"   # Pencere Başlığımız                    #
-#########################################################################################################
-########################################################################################################################
-def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adında bir fonksiyon oluşturduk
-    if isletim_sistemi == "Windows":                # Eğer İşletim Sistemi "Windows" ise
-        import win32console, win32gui               # Gerekli Modüller
-        terminal = win32console.GetConsoleWindow()  # Terminal adlı değişken
-        win32gui.ShowWindow(terminal, 0)            # Görünmez yap
-    else:                                           # Eğer İşletim Sistemi "Windows" değilse
-        pass                                        # Boşver :)
-WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin
-                            # -- pyinstaller -i udemy.ico --onefile --noconsole KekikUdemyGUI.py --
-########################################################################################################################
+#-------------------------------------------------------------------------------------------------------#####
+def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adında bir fonksiyon oluşturduk #
+    if isletim_sistemi == "Windows":                # Eğer İşletim Sistemi "Windows" ise                    #
+        import win32console, win32gui               # Gerekli Modüller                                      #
+        terminal = win32console.GetConsoleWindow()  # Terminal adlı değişken                                #
+        win32gui.ShowWindow(terminal, 0)            # Görünmez yap                                          #
+    else:                                           # Eğer İşletim Sistemi "Windows" değilse                #
+        pass                                        # Boşver :)                                             #
+WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin             #
+                            # -- pyinstaller -i udemy.ico --onefile --noconsole KekikUdemyGUI.py --         #
+#############################################################################################################
 #####################################
 class Pencere(QWidget):             # Penceremizi Oluşturduk
     def __init__(self):
