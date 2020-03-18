@@ -149,7 +149,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         for adet in range(0, len(udemy_baslik)):
             ############################################################
             gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")
-            gelen_udemy_kaydet.write(f"\n{udemy_baslik[adet]}\n")
+            gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")
             gelen_udemy_kaydet.write(f"\t{udemy_link[adet]}\n")
             gelen_udemy_kaydet.close()
             ############################################################
