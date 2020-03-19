@@ -88,9 +88,9 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         # Horizontal Box
         h_box = QHBoxLayout()
         h_box.addWidget(self.cekilecekSayfa)
-        #h_box.addStretch()                              # Yatay dinamik uzaklığı koru
+        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
         h_box.addWidget(discUdemy)
-        #h_box.addStretch()                              # Yatay dinamik uzaklığı koru
+        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
         h_box.addWidget(realDiscount)
 
         # Vertical Box
