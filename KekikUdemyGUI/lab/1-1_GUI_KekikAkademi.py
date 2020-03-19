@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #! -*- coding: utf-8 -*-
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
-# @raifpy > Ömer Rai'ye Sonsuz Teşekkürler..
 
 #################################
 from PyQt5.QtCore import *      #
@@ -55,60 +54,67 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         self.setUI()
 
     def setUI(self):
-        baslik = QLabel("")
-        sistem = QLabel("")
-        logo = QLabel()
-        self.donenYazi = QTextEdit()
-        self.girilenYazi = QLineEdit("Yazı Girin")
-        buton_1 = QPushButton()
-        buton_2 = QPushButton()
+        # vBox -- Dikey Yerleşim (Vertical Layout)
+        vBox = QVBoxLayout()
+
+        # hBox -- Yatay Yerleşim (Horizontal Layout)
+        hBox = QHBoxLayout()
 
         # Başlık
+        baslik = QLabel()
         baslik.setText(f'<h1><font color="green">{pencere_basligi}</font></h1>')
         baslik.setFont(QFont("Helvatica",15,QFont.Bold))
         baslik.setAlignment(Qt.AlignCenter)
 
         # Sistem
+        sistem = QLabel()
         sistem.setText(ust_bilgi)
         sistem.setFont(QFont("Courier",12,QFont.Bold))
         sistem.setAlignment(Qt.AlignCenter)
 
         # Logo
+        logo = QLabel()
         logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png").scaled(700,250))
         logo.setAlignment(Qt.AlignCenter)
 
+        # Dönen Kurslar
+        self.donenYazi = QTextEdit()
+
+        # Girilen Sayfa
+        self.girilenYazi = QLineEdit()
+        self.girilenYazi.setPlaceholderText("Ne Vereyim Abime")
+
         # buton_1
+        buton_1 = QPushButton()
         buton_1.setIcon(QIcon(r"img/buton_1.png"))
         buton_1.setText("buton_1")
+        buton_1.clicked.connect(self.Buton_1_Tiklandi)
 
         # buton_2
+        buton_2 = QPushButton()
         buton_2.setIcon(QIcon(r"img/buton_2.png"))
         buton_2.setText("buton_2")
-
-        # Horizontal Box
-        h_box = QHBoxLayout()
-        h_box.addWidget(self.girilenYazi)
-        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
-        h_box.addWidget(buton_1)
-        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
-        h_box.addWidget(buton_2)
-
-        # Vertical Box
-        v_box = QVBoxLayout()
-        v_box.addWidget(baslik)
-        v_box.addWidget(sistem)
-        v_box.addWidget(logo)
-        v_box.addWidget(self.donenYazi)
-        v_box.addLayout(h_box)
-
-        buton_1.clicked.connect(self.Buton_1_Tiklandi)
         buton_2.clicked.connect(self.Buton_2_Tiklandi)
 
-        self.setLayout(v_box)
+        # Yatay Düzen'e(hBox'a) Yerleştir
+        hBox.addWidget(self.girilenYazi)
+        #hBox.addStretch()                              # Dikey dinamik uzaklığı koru
+        hBox.addWidget(buton_1)
+        #hBox.addStretch()                              # Dikey dinamik uzaklığı koru
+        hBox.addWidget(buton_2)
+
+        # Dikey Düzen'e(vBox'a) Yerleştir
+        vBox.addWidget(baslik)
+        vBox.addWidget(sistem)
+        vBox.addWidget(logo)
+        vBox.addWidget(self.donenYazi)
+        vBox.addLayout(hBox)
+
+        self.setLayout(vBox)
 #########################################################
         self.show()                                     # Pencereyi göster
         self.setWindowTitle(f"{pencere_basligi}")       # Pencere Başlığımızı Belirledik
-        self.setWindowIcon(QIcon("img/kekik.png"))      # Pencere İkonumuzu Belirledik
+        self.setWindowIcon(QIcon("img/udemy.png"))      # Pencere İkonumuzu Belirledik
         self.setMinimumSize(QSize(750, 500))            # Pencere Min. Ebat Tanımladık
         self.setMaximumSize(QSize(750, 750))            # Pencere Max. Ebat Tanımladık
         #pencere.setGeometry(700,300,500,500)            # 700x300 kordinatında başlayarak / 500x500 ebatında aç
@@ -116,7 +122,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
     def Buton_1_Tiklandi(self):
         gelen = self.girilenYazi.text()
         self.donenYazi.setText(f"Bunu Yazdın : {gelen}")
-
+        
     def Buton_2_Tiklandi(self):
         gelen = self.girilenYazi.text()
         self.donenYazi.setText(f"Bunu Yazdın : {gelen}")
