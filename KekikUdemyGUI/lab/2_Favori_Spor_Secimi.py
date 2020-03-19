@@ -55,13 +55,13 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         hBox.addWidget(btnGolf)                                 # Yatay Düzene btnGolf Ekle
 
         # Yeni bi değişkende grup'Landır
-        groupBox.setLayout(hBox)    # Hbox'ı groupBox(Toplanma Alanı) içine attık .
+        groupBox.setLayout(hBox)                                # hBox'ı groupBox(Toplanma Alanı) içine attık .
 
         # grupgroupBox'ı(Toplanma Alanını) Dikey Düzene(vBox'a) Ekle
-        vBox.addWidget(groupBox)    # groupBox'ı Layout olarak set edemeyeceğimiz için vBox içine attık
+        vBox.addWidget(groupBox)                                # groupBox'ı Layout olarak set edemeyeceğimiz için vBox içine attık
 
         # Dikey Düzeni(vBox'ı) Çağır
-        self.setLayout(vBox)        # vBox'ımızı Ana Yerleşim olarak belirle
+        self.setLayout(vBox)                                    # vBox'ımızı Ana Yerleşim olarak belirle
         
 #########################################################
         self.show()                                     # Pencereyi göster
