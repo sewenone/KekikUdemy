@@ -9,6 +9,9 @@ from PyQt5.QtGui import *       #
 from PyQt5.QtWidgets import *   #
 import sys                      #
 #################################
+from bs4 import BeautifulSoup       # HTML veya XML dosyalarını okuyan arkadaş
+import html5lib                     # HTML dosyalarını işleyen arkadaş
+import re                           # Ayrıştırıcı Arkadaş
 #########################################################################################################
 import os                           # Dizinler ve dosyalarla çalışmak için                              #
 import platform                     # Çalışılan makine bilgisi sağlayacak arkadaş                       #
@@ -55,56 +58,63 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         self.setUI()
 
     def setUI(self):
-        baslik = QLabel("")
-        sistem = QLabel("")
-        logo = QLabel()
-        self.alinanKurslar = QTextEdit()
-        self.cekilecekSayfa = QLineEdit("Kaç Sayfa Çekilsin?")
-        discUdemy = QPushButton()
-        realDiscount = QPushButton()
+        # vBox -- Dikey Yerleşim (Vertical Layout)
+        vBox = QVBoxLayout()
+
+        # hBox -- Yatay Yerleşim (Horizontal Layout)
+        hBox = QHBoxLayout()
 
         # Başlık
+        baslik = QLabel()
         baslik.setText(f'<h1><font color="green">{pencere_basligi}</font></h1>')
         baslik.setFont(QFont("Helvatica",15,QFont.Bold))
         baslik.setAlignment(Qt.AlignCenter)
 
         # Sistem
+        sistem = QLabel()
         sistem.setText(ust_bilgi)
         sistem.setFont(QFont("Courier",12,QFont.Bold))
         sistem.setAlignment(Qt.AlignCenter)
 
         # Logo
+        logo = QLabel()
         logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png").scaled(700,250))
         logo.setAlignment(Qt.AlignCenter)
 
+        # Alınan Kurslar
+        self.alinanKurslar = QTextEdit()
+
+        # Çekilecek Sayfa
+        self.cekilecekSayfa = QLineEdit()
+        self.cekilecekSayfa.setPlaceholderText("Kaç Sayfa Çekilsin?")
+
         # discUdemy
+        discUdemy = QPushButton()
         discUdemy.setIcon(QIcon(r"img/discUdemy.png"))
         discUdemy.setText("discUdemy")
+        discUdemy.clicked.connect(self.DiscUdemy)
 
         # realDiscount
+        realDiscount = QPushButton()
         realDiscount.setIcon(QIcon(r"img/realDiscount.png"))
         realDiscount.setText("realDiscount")
-
-        # Horizontal Box
-        h_box = QHBoxLayout()
-        h_box.addWidget(self.cekilecekSayfa)
-        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
-        h_box.addWidget(discUdemy)
-        #h_box.addStretch()                              # Dikey dinamik uzaklığı koru
-        h_box.addWidget(realDiscount)
-
-        # Vertical Box
-        v_box = QVBoxLayout()
-        v_box.addWidget(baslik)
-        v_box.addWidget(sistem)
-        v_box.addWidget(logo)
-        v_box.addWidget(self.alinanKurslar)
-        v_box.addLayout(h_box)
-
-        discUdemy.clicked.connect(self.DiscUdemy)
         realDiscount.clicked.connect(self.RealDiscount)
 
-        self.setLayout(v_box)
+        # Yatay Düzen'e(hBox'a) Yerleştir
+        hBox.addWidget(self.cekilecekSayfa)
+        #hBox.addStretch()                              # Dikey dinamik uzaklığı koru
+        hBox.addWidget(discUdemy)
+        #hBox.addStretch()                              # Dikey dinamik uzaklığı koru
+        hBox.addWidget(realDiscount)
+
+        # Dikey Düzen'e(vBox'a) Yerleştir
+        vBox.addWidget(baslik)
+        vBox.addWidget(sistem)
+        vBox.addWidget(logo)
+        vBox.addWidget(self.alinanKurslar)
+        vBox.addLayout(hBox)
+
+        self.setLayout(vBox)
 #########################################################
         self.show()                                     # Pencereyi göster
         self.setWindowTitle(f"{pencere_basligi}")       # Pencere Başlığımızı Belirledik
@@ -116,7 +126,6 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
     def DiscUdemy(self):
         udemy_baslik = []
         udemy_link = []
-
         for sayfa in range(1, int(self.cekilecekSayfa.text())):             # ilk döngü /language/Turkish için
             ######################################################################################################
             sayfa = str(sayfa)                                              # int olan değerimizi str yapıyoruz
@@ -150,7 +159,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
             ############################################################
             gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")
             gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")
-            gelen_udemy_kaydet.write(f"\t{udemy_link[adet]}\n")
+            gelen_udemy_kaydet.write(f"{udemy_link[adet]}\n\n")
             gelen_udemy_kaydet.close()
             ############################################################
         icerik = open("DiscUdemy.txt", "r").read()
