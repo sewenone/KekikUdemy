@@ -136,7 +136,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
             kimlik = {'User-Agent': '@KekikAkademi'}                        # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
             istek = requests.get(link)                                      # link'e istek göderiyoruz ve gelen veriyi kaydediyoruz
             kaynak = BeautifulSoup(istek.text, 'html5lib')                  # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
-            #####self.logo.setText(link)                                         # Ekrana Yaz
+            #self.alinanKurslar.setText(link)                                         # Ekrana Yaz
             #sleep(1)                                                        # Bekleme Ver
             #----------------------------------------------------------------------------------------------------------------------------------#
 
@@ -144,7 +144,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
             for heading in kaynak.findAll('a', {'class': 'card-header'}):   # kaynak'tan | <a class'ı = card-header olanları tut
                 heading = heading.text                                      # Yazı Formatına Çevir
                 udemy_baslik.append(heading)                                # Tablomuza Yerleştir
-                ######self.logo.setText(heading)                                 # Ekrana Yaz
+                #self.alinanKurslar.setText(heading)                                 # Ekrana Yaz
             #sleep(1)                                                        # Bekleme Ver
             #---------------------------------------------------------------------------------------------------------------------#
 
@@ -154,7 +154,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
                 gelen_discudemy = discudemy_linkler['href']                             # dönen verideki linkleri tut
                 discudemy_go_html = requests.get(gelen_discudemy)                       # onlara istek gönder
                 discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib') # kaynağını al
-                #####self.logo.setText(gelen_discudemy)                            # Ekrana Yaz
+                #self.alinanKurslar.setText(gelen_discudemy)                            # Ekrana Yaz
                 #sleep(1)                                                                # Bekleme Ver
                 
                 #-------------------------------------------------------------------------------------------------------------------#
@@ -163,7 +163,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
                     gelen_discudemy_go = discudemy_go_linkler['href']                   # dönen verideki linkleri tut
                     udemy_html = requests.get(gelen_discudemy_go)                       # onlara istek gönder
                     udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')           # kaynağını al
-                    ####self.logo.setText(gelen_discudemy_go)                     # Ekrana Yaz
+                    #self.alinanKurslar.setText(gelen_discudemy_go)                     # Ekrana Yaz
                     #sleep(1)                                                            # Bekleme Ver
                     
                     #---------------------------------------------------------------------------------------------------------------#
@@ -171,7 +171,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
                         'href': re.compile("^https://www.udemy.com/")}):                # href="../www.udemy.com/" olan linkleri tut
                         gelen_udemy = udemy_linkler['href']                             # dönen verideki linkleri tut
                         udemy_link.append(gelen_udemy)                                  # Tablomuza Yerleştir
-                        ####self.logo.setText(gelen_udemy)                        # Ekrana Yaz
+                        #self.alinanKurslar.setText(gelen_udemy)                        # Ekrana Yaz
                         #sleep(1)                                                        # Bekleme Ver
             #-----------------------------------------------------------------------------------------------------------------------#
 
@@ -187,40 +187,34 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         icerik = open("DiscUdemy.txt", "r+").read()                 # Dosyayı oku   #
         self.alinanKurslar.setText(icerik)                          # Ekrana Yaz    #
         #---------------------------------------------------------------------------#
-        
-        #---------------------------------------------------------------------------------------------#
-        satir_say = open("DiscUdemy.txt")
-        satir = 0
-        for line in satir_say:
-            satir = satir+1
-        satir_bilgi = "\n\t Bulunup, Yazılan Link Sayısı >>" + f"{int(satir/3)}"
-        #####self.alinanKurslar.textChanged(satir_bilgi) #setText(satir_bilgi)     # Ekrana Yaz
-        satir_say.close()
-        os.remove("DiscUdemy.txt")                                  # Dosyayı Sil   
-        #---------------------------------------------------------------------------------------------#
 
     def RealDiscount(self):
-        for sayfa in range(1, int(self.cekilecekSayfa.text())):
+        for sayfa in range(1, int(self.cekilecekSayfa.text())):  # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+            #------------------------------------------------------------------------------------------------------------------------#
             sayfa = str(sayfa)                                  # int olan değerimizi str yapıyoruz
             link = 'https://www.real.discount/new/' + sayfa     # sayfalar arasında gezinmek için
             kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
             html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
             kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
+            #------------------------------------------------------------------------------------------------------------------------#
+            
+            #------------------------------------------------------------------------------------------------------------------------#
             for discount_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.real.discount/offer/")}):
                 gelen_discount = discount_linkler['href']
-
+                    
+                #------------------------------------------------------------------------------------------------------------------------#
                 udemy_html = requests.get(gelen_discount, headers=kimlik)
                 udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
-                for udemy_linkler in udemy_kaynak.findAll('a', attrs={
-                    'href': re.compile("^https://www.udemy.com/")}):  # o sayfanın içindeki udemy linki
+                for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
                     gelen_udemy = udemy_linkler['href']
-
-                    ######################################################
+                    
+                    #----------------------------------------------------#
                     gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
                     gelen_udemy_kaydet.write(gelen_udemy + "\n")
                     gelen_udemy_kaydet.close()
-                    ######################################################
-        ###########################################################################
+                    #----------------------------------------------------#
+        
+        #---------------------------------------------------------#
         lines_seen = set()              # holds lines already seen
         outfile = open("RealDiscount.txt", "a")
         for line in open("UdemyeGiderken.txt", "r"):
@@ -229,10 +223,12 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
                 lines_seen.add(line)
         outfile.close()
         os.remove("UdemyeGiderken.txt")
-        ###########################################################################
-        icerik = open("RealDiscount.txt", "r").read()
-        self.alinanKurslar.setText(icerik)
-        os.remove("RealDiscount.txt")
+        #---------------------------------------------------------#
+        #---------------------------------------------------------------------------#
+        icerik = open("RealDiscount.txt", "r+").read()              # Dosyayı oku   #
+        self.alinanKurslar.setText(icerik)                          # Ekrana Yaz    #
+        #---------------------------------------------------------------------------#
+        
 
 if __name__ == "__main__":
     uygulama = QApplication(sys.argv)           # Uygulamamızı Oluşturduk

@@ -218,61 +218,66 @@ def DiscUdemy():
         satir = satir+1
     print(f"\n\t{Fore.YELLOW} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}" + f"{int(satir/3)}")
     satir_say.close()
-    os.remove("DiscUdemy.txt")                                  # Dosyayı Sil   
+    os.remove("DiscUdemy.txt")                                  # Dosyayı Sil  /Fore.İle Yazıldı 
     #---------------------------------------------------------------------------------------------#
 ##############################################################################################################################################
 
 ########################################################################################################################
 def RealDiscount():
-    for sayfa in range(1, 2):
-        sayfa = str(sayfa)    # int olan değerimizi str yapıyoruz
-        link = 'https://www.real.discount/new/' + sayfa    # sayfalar arasında gezinmek için
-        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")
-        
+    for sayfa in range(1, 2):                               # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+        #------------------------------------------------------------------------------------------------------------------------#
+        sayfa = str(sayfa)                                  # int olan değerimizi str yapıyoruz
+        link = 'https://www.real.discount/new/' + sayfa     # sayfalar arasında gezinmek için
         kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
-        
         html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
         kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
+        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")
+        #------------------------------------------------------------------------------------------------------------------------#
+        
+        #------------------------------------------------------------------------------------------------------------------------#
         for discount_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.real.discount/offer/")}):
             gelen_discount = discount_linkler['href']
             print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discount} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
                 
+            #------------------------------------------------------------------------------------------------------------------------#
             udemy_html = requests.get(gelen_discount, headers=kimlik)
             udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
             for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
                 gelen_udemy = udemy_linkler['href']
                 print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN}Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
                 
-                ############################################################
+                #----------------------------------------------------#
                 gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
                 gelen_udemy_kaydet.write(gelen_udemy + "\n")
                 gelen_udemy_kaydet.close()
-                ############################################################
+                #----------------------------------------------------#
                 
-    ###########################################################################################
+    #---------------------------------------------------------------------------------------------#
     satir_say = open("UdemyeGiderken.txt")
     satir = 0
     for line in satir_say:
         satir = satir+1
     print(f"\n\t{Fore.GREEN} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir}")
     satir_say.close()
-    ###########################################################################################
+    #---------------------------------------------------------------------------------------------#
 ########################################################################################################################
 
 ########################################################################################################################
 def CiftLinkSil():
-    ###########################################################################
-    lines_seen = set() # holds lines already seen
-    outfile = open("Udemy_KekikAkademi.txt", "a")
+    #---------------------------------------------------------#
+    lines_seen = set()              # holds lines already seen
+    outfile = open("RealDiscount.txt", "a")
     for line in open("UdemyeGiderken.txt", "r"):
-        if line not in lines_seen: # not a duplicate
+        if line not in lines_seen:  # not a duplicate
             outfile.write(line)
             lines_seen.add(line)
     outfile.close()
     os.remove("UdemyeGiderken.txt")
-    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Bulunup Silindi ve Udemy_KekikAkademi.txt Kaydedildi!!!" + Fore.WHITE + "\n")
+    print("\n\t\t" + Fore.YELLOW + "Çift Linkler Bulunup Silindi ve RealDiscount.txt Kaydedildi!!!" + Fore.WHITE + "\n")
+    #---------------------------------------------------------#
+    
     ###########################################################################################
-    satir_say = open("Udemy_KekikAkademi.txt")
+    satir_say = open("RealDiscount.txt")
     satir = 0
     for line in satir_say:
         satir = satir+1
