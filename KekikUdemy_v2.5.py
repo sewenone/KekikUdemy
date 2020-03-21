@@ -18,6 +18,7 @@ try:                                # Dene
     from bs4 import BeautifulSoup   # HTML veya XML dosyalarını okuyan arkadaş
     import html5lib                 # HTML dosyalarını işleyen arkadaş
     import re                       # Ayrıştırıcı Arkadaş
+    from time import sleep          # sleep() için
 except ModuleNotFoundError:                 # Modül bulunamadıysa
     try:                                    # Dene
         print("\n\tEksik modüllerin varmış,\n\t\tSenin için pip3 ile yüklemeyi deniyorum..")
@@ -52,6 +53,7 @@ except ModuleNotFoundError:                 # Modül bulunamadıysa
         import requests                 # Websitelerine istek atmamızı sağlayacak arkadaş
         from bs4 import BeautifulSoup   # HTML veya XML dosyalarını işleyen arkadaş
         import re                       # Ayrıştırıcı Arkadaş
+        from time import sleep          # sleep() için
         print(f"\n\t{Fore.GREEN}Modül yükleme işini hallettik!")
     except Exception as hata:               # Hala hata var ise
         sys.exit(f"{Fore.RED}Modüller yüklenemedi !\n\n{Fore.CYAN}Log : {Fore.LIGHTBLACK_EX}{hata}") # Kapat(yazdır)
@@ -129,48 +131,96 @@ def WindowsBildirimi():                              # WindowsBildirimi adında 
 WindowsBildirimi()
 ########################################################################################################################
 
-########################################################################################################################
+##############################################################################################################################################
 def DiscUdemy():
-    for sayfa in range(1, 3): # ilk döngü /language/Turkish için
-        sayfa = str(sayfa)    # int olan değerimizi str yapıyoruz
+    #-------------------------------------------------------------------------------------------#
+    udemy_baslik = []                                                   # Boş Tablo Oluşturduk  #
+    udemy_link = []                                                     # Boş Tablo Oluşturduk  #
+    #-------------------------------------------------------------------------------------------#
+
+    for sayfa in range(1, 3):                                           # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+        #----------------------------------------------------------------------------------------------------------------------------------#
+        sayfa = str(sayfa)                                              # int olan değerimizi str yapıyoruz
         link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
-        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")
-        
-        kimlik = {'User-Agent': '@KekikAkademi'}            # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
-        
-        html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
-        kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
-        for discudemy_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/Turkish/")}): # Turkish/kurs-adi
-            gelen_discudemy = discudemy_linkler['href']
+        kimlik = {'User-Agent': '@KekikAkademi'}                        # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
+        istek = requests.get(link)                                      # link'e istek göderiyoruz ve gelen veriyi kaydediyoruz
+        kaynak = BeautifulSoup(istek.text, 'html5lib')                  # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
+        print(f"\t{Fore.RED}[*] {link} {Fore.CYAN}| {Fore.RED}Burdayım !")# Bulunduğun Link'i Terminale Yazdır
+        print("\t\t Değişken : // link\n")                              # ilgili Değişkeni Terminale Yazdır
+        #sleep(1)                                                        # Bekleme Ver
+        #----------------------------------------------------------------------------------------------------------------------------------#
+
+        #---------------------------------------------------------------------------------------------------------------------#
+        for heading in kaynak.findAll('a', {'class': 'card-header'}):   # kaynak'tan | <a class'ı = card-header olanları tut
+            heading = heading.text                                      # Yazı Formatına Çevir
+            udemy_baslik.append(heading)                                # Tablomuza Yerleştir
+        print(f"\tBaşlık Yakaladım : {Fore.LIGHTBLACK_EX}{udemy_baslik}")
+        print("\t\t Değişken : // udemy_baslik\n")                      # ilgili Değişkeni Terminale Yazdır
+        #sleep(1)                                                        # Bekleme Ver
+        #---------------------------------------------------------------------------------------------------------------------#
+
+        #-----------------------------------------------------------------------------------------------------------------------#
+        for discudemy_linkler in kaynak.findAll('a', attrs={                        # kaynak'tan | <a olanları _ ve
+            'href': re.compile("^https://www.discudemy.com/Turkish/")}):            # href="../Turkish/' olan linkleri tut
+            gelen_discudemy = discudemy_linkler['href']                             # dönen verideki linkleri tut
+            discudemy_go_html = requests.get(gelen_discudemy)                       # onlara istek gönder
+            discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib') # kaynağını al
             print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
+            print(f"\t {Fore.LIGHTBLUE_EX}Değişken : // gelen_discudemy\n")          # ilgili Değişkeni Terminale Yazdır
+            #sleep(1)                                                                # Bekleme Ver
             
-            discudemy_go_html = requests.get(gelen_discudemy, headers=kimlik)
-            discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib')
-            for discudemy_go_linkler in discudemy_go_kaynak.findAll('a', attrs={'href': re.compile("^https://www.discudemy.com/go/")}): # go/kurs-adi
-                gelen_discudemy_go = discudemy_go_linkler['href']
+            #-------------------------------------------------------------------------------------------------------------------#
+            for discudemy_go_linkler in discudemy_go_kaynak.findAll('a', attrs={    # aldığın kaynaktan | <a olanları _ ve
+                'href': re.compile("^https://www.discudemy.com/go/")}):             # href="../go/kurs-adi" olan linkleri tut
+                gelen_discudemy_go = discudemy_go_linkler['href']                   # dönen verideki linkleri tut
+                udemy_html = requests.get(gelen_discudemy_go)                       # onlara istek gönder
+                udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')           # kaynağını al
                 print(f"{Fore.LIGHTBLACK_EX}[/] {gelen_discudemy_go} {Fore.CYAN}| {Fore.LIGHTBLACK_EX}Burdayım !")
+                print(f"\t {Fore.LIGHTBLUE_EX}Değişken : // gelen_discudemy_go\n")   # ilgili Değişkeni Terminale Yazdır
+                #sleep(1)                                                            # Bekleme Ver
                 
-                udemy_html = requests.get(gelen_discudemy_go, headers=kimlik)
-                udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
-                for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
-                    gelen_udemy = udemy_linkler['href']
-                    print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN}Buldum !\n") # gelen_udemy değerimizi (linkimizi) yazdık
-                    
-                    ############################################################
-                    gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
-                    gelen_udemy_kaydet.write(gelen_udemy + "\n")
-                    gelen_udemy_kaydet.close()
-                    ############################################################
-                    
-    ###########################################################################################
-    satir_say = open("UdemyeGiderken.txt")
+                #---------------------------------------------------------------------------------------------------------------#
+                for udemy_linkler in udemy_kaynak.findAll('a', attrs={              # aldığın kaynaktan | <a olanları _ ve
+                    'href': re.compile("^https://www.udemy.com/")}):                # href="../www.udemy.com/" olan linkleri tut
+                    gelen_udemy = udemy_linkler['href']                             # dönen verideki linkleri tut
+                    udemy_link.append(gelen_udemy)                                  # Tablomuza Yerleştir
+                    print(f"{Fore.GREEN}[+] {Fore.YELLOW}{gelen_udemy} {Fore.CYAN}| {Fore.GREEN}Buldum !")
+                    print(f"\t {Fore.LIGHTBLUE_EX}Değişken : // gelen_udemy\n")      # ilgili Değişkeni Terminale Yazdır
+                    #sleep(1)                                                        # Bekleme Ver
+        #-----------------------------------------------------------------------------------------------------------------------#
+
+    #-------------------------------------------#
+    print("\n\n\n\tSiliyorum...")               # Sildiğini Bildir
+    sleep(2)                                    # 2sn Bekle
+    os.system("cls")                            # Terminal'i Temizle
+    print("\n\n\n\tKursları Listeliyorum...")   # Listelediğini Bildir
+    sleep(2)                                    # 2sn Bekle
+    os.system("cls")                            # Terminal'i Temizle
+    #-------------------------------------------#
+
+    #-------------------------------------------------------------------------------------------------------------------------#
+    for adet in range(0, len(udemy_baslik)):                    # 0'dan Başlayarak, Dönen "başlık" sayısı kadar "adet" oluştur
+        gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")        # .txt oluştur
+        gelen_udemy_kaydet.write(f"{Fore.RED}{udemy_baslik[adet]}\n")     # Başlık[adet] yaz satır atla
+        gelen_udemy_kaydet.write(f"{Fore.CYAN}{udemy_link[adet]}\n\n")     # Link[adet] Yaz satır atla, satır atla
+        gelen_udemy_kaydet.close()                              # dosyayı kapat
+    #-------------------------------------------------------------------------------------------------------------------------#
+
+    #---------------------------------------------------------------------------#
+    icerik = open("DiscUdemy.txt", "r+").read()                 # Dosyayı oku   #
+    print(icerik)                                               # Ekrana Yaz    #
+    #---------------------------------------------------------------------------#
+    
+    #---------------------------------------------------------------------------------------------#
+    satir_say = open("DiscUdemy.txt")
     satir = 0
     for line in satir_say:
         satir = satir+1
-    print(f"\n\t{Fore.GREEN} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}{satir}")
+    print(f"\n\t{Fore.YELLOW} Bulunup, Yazılan Link Sayısı{Fore.YELLOW} >> {Fore.RED}" + f"{int(satir/3)}")
     satir_say.close()
-    ###########################################################################################
-########################################################################################################################
+    os.remove("DiscUdemy.txt")                                  # Dosyayı Sil   
+    #---------------------------------------------------------------------------------------------#
+##############################################################################################################################################
 
 ########################################################################################################################
 def RealDiscount():
@@ -254,7 +304,6 @@ def AcilisSayfasi():
         print(Fore.LIGHTBLUE_EX + logo)
         print(ust_bilgi)    # Üst Bilgi fonksiyonunu çalıştır
         DiscUdemy()         # DiscUdemy fonksiyonunu çalıştır
-        CiftLinkSil()
     #########################
     elif secenek == '2':    # Eğer 2 yi seçerse
         Temizle()           # Temizle fonksiyonunu çalıştır
