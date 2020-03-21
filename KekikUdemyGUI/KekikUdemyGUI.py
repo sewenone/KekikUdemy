@@ -48,7 +48,7 @@ def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adı
         win32gui.ShowWindow(terminal, 0)            # Görünmez yap                                          #
     else:                                           # Eğer İşletim Sistemi "Windows" değilse                #
         pass                                        # Boşver :)                                             #
-#WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin             #
+WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin             #
                             # -- pyinstaller -i udemy.ico --onefile --noconsole KekikUdemyGUI.py --         #
 #############################################################################################################
 #####################################
