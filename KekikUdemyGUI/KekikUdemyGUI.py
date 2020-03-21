@@ -48,7 +48,7 @@ def WindowsTerminaliGizle():                        # WindowsTerminaliGizle adı
         win32gui.ShowWindow(terminal, 0)            # Görünmez yap                                          #
     else:                                           # Eğer İşletim Sistemi "Windows" değilse                #
         pass                                        # Boşver :)                                             #
-WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin             #
+#WindowsTerminaliGizle()     # Eğer Windows'da Terminalin gizlenmesini istiyosanız aktifleştirin             #
                             # -- pyinstaller -i udemy.ico --onefile --noconsole KekikUdemyGUI.py --         #
 #############################################################################################################
 #####################################
@@ -77,9 +77,9 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         sistem.setAlignment(Qt.AlignCenter)
 
         # Logo
-        logo = QLabel()
-        logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png").scaled(700,250))
-        logo.setAlignment(Qt.AlignCenter)
+        self.logo = QLabel()
+        self.logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png").scaled(700,250))
+        self.logo.setAlignment(Qt.AlignCenter)
 
         # Alınan Kurslar
         self.alinanKurslar = QTextEdit()
@@ -110,7 +110,7 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         # Dikey Düzen'e(vBox'a) Yerleştir
         vBox.addWidget(baslik)
         vBox.addWidget(sistem)
-        vBox.addWidget(logo)
+        vBox.addWidget(self.logo)
         vBox.addWidget(self.alinanKurslar)
         vBox.addLayout(hBox)
 
@@ -124,47 +124,80 @@ class Pencere(QWidget):             # Penceremizi Oluşturduk
         #pencere.setGeometry(700,300,500,500)            # 700x300 kordinatında başlayarak / 500x500 ebatında aç
 
     def DiscUdemy(self):
-        udemy_baslik = []
-        udemy_link = []
-        for sayfa in range(1, int(self.cekilecekSayfa.text())):             # ilk döngü /language/Turkish için
-            ######################################################################################################
+        #-------------------------------------------------------------------------------------------#
+        udemy_baslik = []                                                   # Boş Tablo Oluşturduk  #
+        udemy_link = []                                                     # Boş Tablo Oluşturduk  #
+        #-------------------------------------------------------------------------------------------#
+
+        for sayfa in range(1, int(self.cekilecekSayfa.text())):             # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+            #----------------------------------------------------------------------------------------------------------------------------------#
             sayfa = str(sayfa)                                              # int olan değerimizi str yapıyoruz
             link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
-            reqs = requests.get(link)
-            soup = BeautifulSoup(reqs.text, 'html5lib')
-            ######################################################################################################
+            kimlik = {'User-Agent': '@KekikAkademi'}                        # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
+            istek = requests.get(link)                                      # link'e istek göderiyoruz ve gelen veriyi kaydediyoruz
+            kaynak = BeautifulSoup(istek.text, 'html5lib')                  # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
+            #####self.logo.setText(link)                                         # Ekrana Yaz
+            #sleep(1)                                                        # Bekleme Ver
+            #----------------------------------------------------------------------------------------------------------------------------------#
 
-            for heading in soup.findAll('a', {'class': 'card-header'}):
-                heading = heading.text
-                udemy_baslik.append(heading)
+            #---------------------------------------------------------------------------------------------------------------------#
+            for heading in kaynak.findAll('a', {'class': 'card-header'}):   # kaynak'tan | <a class'ı = card-header olanları tut
+                heading = heading.text                                      # Yazı Formatına Çevir
+                udemy_baslik.append(heading)                                # Tablomuza Yerleştir
+                ######self.logo.setText(heading)                                 # Ekrana Yaz
+            #sleep(1)                                                        # Bekleme Ver
+            #---------------------------------------------------------------------------------------------------------------------#
 
-            for discudemy_linkler in soup.findAll('a', attrs={
-                'href': re.compile("^https://www.discudemy.com/Turkish/")}):  # Turkish/kurs-adi
-                gelen_discudemy = discudemy_linkler['href']
-                discudemy_go_html = requests.get(gelen_discudemy)
-                discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib')
+            #-----------------------------------------------------------------------------------------------------------------------#
+            for discudemy_linkler in kaynak.findAll('a', attrs={                        # kaynak'tan | <a olanları _ ve
+                'href': re.compile("^https://www.discudemy.com/Turkish/")}):            # href="../Turkish/' olan linkleri tut
+                gelen_discudemy = discudemy_linkler['href']                             # dönen verideki linkleri tut
+                discudemy_go_html = requests.get(gelen_discudemy)                       # onlara istek gönder
+                discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib') # kaynağını al
+                #####self.logo.setText(gelen_discudemy)                            # Ekrana Yaz
+                #sleep(1)                                                                # Bekleme Ver
+                
+                #-------------------------------------------------------------------------------------------------------------------#
+                for discudemy_go_linkler in discudemy_go_kaynak.findAll('a', attrs={    # aldığın kaynaktan | <a olanları _ ve
+                    'href': re.compile("^https://www.discudemy.com/go/")}):             # href="../go/kurs-adi" olan linkleri tut
+                    gelen_discudemy_go = discudemy_go_linkler['href']                   # dönen verideki linkleri tut
+                    udemy_html = requests.get(gelen_discudemy_go)                       # onlara istek gönder
+                    udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')           # kaynağını al
+                    ####self.logo.setText(gelen_discudemy_go)                     # Ekrana Yaz
+                    #sleep(1)                                                            # Bekleme Ver
+                    
+                    #---------------------------------------------------------------------------------------------------------------#
+                    for udemy_linkler in udemy_kaynak.findAll('a', attrs={              # aldığın kaynaktan | <a olanları _ ve
+                        'href': re.compile("^https://www.udemy.com/")}):                # href="../www.udemy.com/" olan linkleri tut
+                        gelen_udemy = udemy_linkler['href']                             # dönen verideki linkleri tut
+                        udemy_link.append(gelen_udemy)                                  # Tablomuza Yerleştir
+                        ####self.logo.setText(gelen_udemy)                        # Ekrana Yaz
+                        #sleep(1)                                                        # Bekleme Ver
+            #-----------------------------------------------------------------------------------------------------------------------#
 
-                for discudemy_go_linkler in discudemy_go_kaynak.findAll('a', attrs={
-                    'href': re.compile("^https://www.discudemy.com/go/")}):  # go/kurs-adi
-                    gelen_discudemy_go = discudemy_go_linkler['href']
-                    udemy_html = requests.get(gelen_discudemy_go)
-                    udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
+        #-------------------------------------------------------------------------------------------------------------------------#
+        for adet in range(0, len(udemy_baslik)):                    # 0'dan Başlayarak, Dönen "başlık" sayısı kadar "adet" oluştur
+            gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")        # .txt oluştur
+            gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")     # Başlık[adet] yaz satır atla
+            gelen_udemy_kaydet.write(f"{udemy_link[adet]}\n\n")     # Link[adet] Yaz satır atla, satır atla
+            gelen_udemy_kaydet.close()                              # dosyayı kapat
+        #-------------------------------------------------------------------------------------------------------------------------#
 
-                    for udemy_linkler in udemy_kaynak.findAll('a', attrs={
-                        'href': re.compile("^https://www.udemy.com/")}):    # o sayfanın içindeki udemy linki
-                        gelen_udemy = udemy_linkler['href']
-                        udemy_link.append(gelen_udemy)
-
-        for adet in range(0, len(udemy_baslik)):
-            ############################################################
-            gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")
-            gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")
-            gelen_udemy_kaydet.write(f"{udemy_link[adet]}\n\n")
-            gelen_udemy_kaydet.close()
-            ############################################################
-        icerik = open("DiscUdemy.txt", "r").read()
-        self.alinanKurslar.setText(icerik)
-        os.remove("DiscUdemy.txt")
+        #---------------------------------------------------------------------------#
+        icerik = open("DiscUdemy.txt", "r+").read()                 # Dosyayı oku   #
+        self.alinanKurslar.setText(icerik)                          # Ekrana Yaz    #
+        #---------------------------------------------------------------------------#
+        
+        #---------------------------------------------------------------------------------------------#
+        satir_say = open("DiscUdemy.txt")
+        satir = 0
+        for line in satir_say:
+            satir = satir+1
+        satir_bilgi = "\n\t Bulunup, Yazılan Link Sayısı >>" + f"{int(satir/3)}"
+        #####self.alinanKurslar.textChanged(satir_bilgi) #setText(satir_bilgi)     # Ekrana Yaz
+        satir_say.close()
+        os.remove("DiscUdemy.txt")                                  # Dosyayı Sil   
+        #---------------------------------------------------------------------------------------------#
 
     def RealDiscount(self):
         for sayfa in range(1, int(self.cekilecekSayfa.text())):
