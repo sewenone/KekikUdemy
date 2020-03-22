@@ -225,9 +225,17 @@ class AnaSayfa(QMainWindow):
 
             # Logo
             self.logo = QLabel()
-            self.logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png").scaled(700, 250))
+            self.logo.setPixmap(QPixmap(r"img/KekikAkademiQt5Logo.png"))
             self.logo.setAlignment(Qt.AlignCenter)
 
+            # Açıklama
+            self.aciklama = QLabel()
+            self.aciklama.setText("""@keyiflerolsun tarafından Eğitim Amaçlı Yazılmıştır.
+            Telegram Kanalımıza Bekleriz: @KekikAkademi""")
+            self.aciklama.setFont(QFont("Courier", 16, QFont.Bold))
+            self.aciklama.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+
+            self.vBox.addWidget(self.aciklama)
             self.vBox.addWidget(self.logo)
 
             self.hakkinda_pencere.setLayout(self.vBox)
@@ -257,15 +265,21 @@ class AnaSayfa(QMainWindow):
         udemy_baslik = []                                                   # Boş Tablo Oluşturduk  #
         udemy_link = []                                                     # Boş Tablo Oluşturduk  #
         #-------------------------------------------------------------------------------------------#
+        gelen_rakam = int(self.cekilecekSayfa.text()) + 1                   # gelen veriyi rakama çevir 1 ekle
 
-        for sayfa in range(1, int(self.cekilecekSayfa.text())):             # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+        self.alinanKurslar.append(f"{gelen_rakam - 1} Sayfa Çekilecek \n\n\t Program Çalışırken Tıklama Yapmayın!\n")  # TextEdit'e ekle
+        self.alinanKurslar.repaint()                                        # TextEdit'i güncelle
+
+        for sayfa in range(1, gelen_rakam):                            # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
             #----------------------------------------------------------------------------------------------------------------------------------#
             sayfa = str(sayfa)                                              # int olan değerimizi str yapıyoruz
             link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
             kimlik = {'User-Agent': '@KekikAkademi'}                        # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
             istek = requests.get(link)                                      # link'e istek göderiyoruz ve gelen veriyi kaydediyoruz
             kaynak = BeautifulSoup(istek.text, 'html5lib')                  # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
-            #self.alinanKurslar.setText(link)                                         # Ekrana Yaz
+
+            self.alinanKurslar.append(f"\t[*] {link} | Burdayım !\n")       # TextEdit'e ekle
+            self.alinanKurslar.repaint()                                    # TextEdit'i güncelle
             #sleep(1)                                                        # Bekleme Ver
             #----------------------------------------------------------------------------------------------------------------------------------#
 
@@ -273,7 +287,6 @@ class AnaSayfa(QMainWindow):
             for heading in kaynak.findAll('a', {'class': 'card-header'}):   # kaynak'tan | <a class'ı = card-header olanları tut
                 heading = heading.text                                      # Yazı Formatına Çevir
                 udemy_baslik.append(heading)                                # Tablomuza Yerleştir
-                #self.alinanKurslar.setText(heading)                                 # Ekrana Yaz
             #sleep(1)                                                        # Bekleme Ver
             #---------------------------------------------------------------------------------------------------------------------#
 
@@ -283,7 +296,8 @@ class AnaSayfa(QMainWindow):
                 gelen_discudemy = discudemy_linkler['href']                             # dönen verideki linkleri tut
                 discudemy_go_html = requests.get(gelen_discudemy)                       # onlara istek gönder
                 discudemy_go_kaynak = BeautifulSoup(discudemy_go_html.text, 'html5lib') # kaynağını al
-                #self.alinanKurslar.setText(gelen_discudemy)                            # Ekrana Yaz
+                self.alinanKurslar.append(f"[/] {gelen_discudemy} | Burdayım !\n")      # TextEdit'e ekle
+                self.alinanKurslar.repaint()                                            # TextEdit'i güncelle
                 #sleep(1)                                                                # Bekleme Ver
 
                 #-------------------------------------------------------------------------------------------------------------------#
@@ -292,7 +306,8 @@ class AnaSayfa(QMainWindow):
                     gelen_discudemy_go = discudemy_go_linkler['href']                   # dönen verideki linkleri tut
                     udemy_html = requests.get(gelen_discudemy_go)                       # onlara istek gönder
                     udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')           # kaynağını al
-                    #self.alinanKurslar.setText(gelen_discudemy_go)                     # Ekrana Yaz
+                    self.alinanKurslar.append(f"[/] {gelen_discudemy_go} | Burdayım !\n")# TextEdit'e ekle
+                    self.alinanKurslar.repaint()                                        # TextEdit'i güncelle
                     #sleep(1)                                                            # Bekleme Ver
 
                     #---------------------------------------------------------------------------------------------------------------#
@@ -300,25 +315,32 @@ class AnaSayfa(QMainWindow):
                         'href': re.compile("^https://www.udemy.com/")}):                # href="../www.udemy.com/" olan linkleri tut
                         gelen_udemy = udemy_linkler['href']                             # dönen verideki linkleri tut
                         udemy_link.append(gelen_udemy)                                  # Tablomuza Yerleştir
-                        #self.alinanKurslar.setText(gelen_udemy)                        # Ekrana Yaz
+                        self.alinanKurslar.append(f"[+] {gelen_udemy} | BULDUM !\n\n")  # TextEdit'e ekle
+                        self.alinanKurslar.repaint()                                    # TextEdit'i güncelle
                         #sleep(1)                                                        # Bekleme Ver
             #-----------------------------------------------------------------------------------------------------------------------#
 
-            #-------------------------------------------------------------------------------------------------------------------------#
-            for adet in range(0, len(udemy_baslik)):                    # 0'dan Başlayarak, Dönen "başlık" sayısı kadar "adet" oluştur
-                gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")        # .txt oluştur
-                gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")     # Başlık[adet] yaz satır atla
-                gelen_udemy_kaydet.write(f"{udemy_link[adet]}\n\n")     # Link[adet] Yaz satır atla, satır atla
-                gelen_udemy_kaydet.close()                              # dosyayı kapat
-            #-------------------------------------------------------------------------------------------------------------------------#
+        #-------------------------------------------------------------------------------------------------------------------------#
+        for adet in range(0, len(udemy_baslik)):                    # 0'dan Başlayarak, Dönen "başlık" sayısı kadar "adet" oluştur
+            gelen_udemy_kaydet = open("DiscUdemy.txt", "a+")        # .txt oluştur
+            gelen_udemy_kaydet.write(f"{udemy_baslik[adet]}\n")     # Başlık[adet] yaz satır atla
+            gelen_udemy_kaydet.write(f"{udemy_link[adet]}\n\n")     # Link[adet] Yaz satır atla, satır atla
+            gelen_udemy_kaydet.close()                              # dosyayı kapat
+        #-------------------------------------------------------------------------------------------------------------------------#
 
-            #---------------------------------------------------------------------------#
-            icerik = open("DiscUdemy.txt", "r+").read()                 # Dosyayı oku   #
-            self.alinanKurslar.setText(icerik)                          # Ekrana Yaz    #
-            #---------------------------------------------------------------------------#
+        #---------------------------------------------------------------------------#
+        icerik = open("DiscUdemy.txt", "r+").read()                 # Dosyayı oku   #
+        self.alinanKurslar.setText(icerik)                          # Ekrana Yaz    #
+        #---------------------------------------------------------------------------#
 
     def RealDiscount(self):         # RealDiscount Adında Bir Fonksiyon Oluşturduk
-        for sayfa in range(1, int(self.cekilecekSayfa.text())):  # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
+        #-------------------------------------------------------------------------------------------------------#
+        gelen_rakam = int(self.cekilecekSayfa.text()) + 1                   # gelen veriyi rakama çevir 1 ekle
+
+        self.alinanKurslar.append(f"{gelen_rakam - 1} Sayfa Çekilecek \n\n\t Program Çalışırken Tıklama Yapmayın!\n")  # TextEdit'e ekle
+        self.alinanKurslar.repaint()                                        # TextEdit'i güncelle
+        # -------------------------------------------------------------------------------------------------------#
+        for sayfa in range(1, gelen_rakam):  # Sayfa Sayısı | örn:(1, 3) {2 Sayfa Tarar [1-2]}
             #------------------------------------------------------------------------------------------------------------------------#
             sayfa = str(sayfa)                                  # int olan değerimizi str yapıyoruz
             link = 'https://www.real.discount/new/' + sayfa     # sayfalar arasında gezinmek için
@@ -326,17 +348,24 @@ class AnaSayfa(QMainWindow):
             html = requests.get(link, headers=kimlik)           # link'in içerisindeki bütün html dosyasını indiriyoruz.
             kaynak = BeautifulSoup(html.text, "html5lib")       # bitifulsup ile html'i işlememiz gerekiyor / html5lib'i kullandık
             #------------------------------------------------------------------------------------------------------------------------#
+
+            self.alinanKurslar.append(f"\t[*] {link} | Burdayım !\n")       # TextEdit'e ekle
+            self.alinanKurslar.repaint()                                    # TextEdit'i güncelle
             
             #------------------------------------------------------------------------------------------------------------------------#
             for discount_linkler in kaynak.findAll('a', attrs={'href': re.compile("^https://www.real.discount/offer/")}):
                 gelen_discount = discount_linkler['href']
-                    
+
+                self.alinanKurslar.append(f"[/] {gelen_discount} | Burdayım !\n")   # TextEdit'e ekle
+                self.alinanKurslar.repaint()                                        # TextEdit'i güncelle
                 #------------------------------------------------------------------------------------------------------------------------#
                 udemy_html = requests.get(gelen_discount, headers=kimlik)
                 udemy_kaynak = BeautifulSoup(udemy_html.text, 'html5lib')
                 for udemy_linkler in udemy_kaynak.findAll('a', attrs={'href': re.compile("^https://www.udemy.com/")}): # o sayfanın içindeki udemy linki
                     gelen_udemy = udemy_linkler['href']
-                    
+
+                    self.alinanKurslar.append(f"[+] {gelen_udemy} | BULDUM !\n\n")  # TextEdit'e ekle
+                    self.alinanKurslar.repaint()                                    # TextEdit'i güncelle
                     #----------------------------------------------------#
                     gelen_udemy_kaydet = open("UdemyeGiderken.txt", "a")
                     gelen_udemy_kaydet.write(gelen_udemy + "\n")
