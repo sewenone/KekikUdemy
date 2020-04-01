@@ -59,7 +59,7 @@ def Scraping(hangi_sayfa):
         liste.append(sozluk)                        # sözlüğü listeye ekle
     return liste                                    # Listeyi Döndür
 
-#---------------------------#
-if __name__ == "__main__":  #
-    print(Scraping())       #
-#---------------------------#
+#-----------------------------------#
+if __name__ == "__main__":          #
+    print(Scraping(hangi_sayfa))    #
+#-----------------------------------#

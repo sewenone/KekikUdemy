@@ -7,6 +7,7 @@ from flask import Flask                 #
 from flask import jsonify,make_response #
 from orumcek import Scraping            #
 #---------------------------------------#
+from time import strftime
 
 #-----------------------#
 app = Flask(__name__)   #
@@ -16,7 +17,7 @@ app = Flask(__name__)   #
 
 @app.route('/')
 def index():
-    return jsonify(Kurslar=Scraping(1))
+    return jsonify(Kurslar=Scraping(1), Zaman=strftime('%m-%d %H:%M:%S'))
 
 @app.route('/<int:hangi_sayfa>', methods=['GET'])
 def get_kullanici(hangi_sayfa):
