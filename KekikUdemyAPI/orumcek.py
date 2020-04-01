@@ -16,7 +16,7 @@ def Scraping(hangi_sayfa):
     #-------------------------------------------------------------------------------------------#
 
     #----------------------------------------------------------------------------------------------------------------------------------#
-    sayfa = str(hangi_sayfa)                                              # int olan değerimizi str yapıyoruz
+    sayfa = str(hangi_sayfa)                                        # int olan değerimizi str yapıyoruz
     link = 'https://www.discudemy.com/language/Turkish/' + sayfa    # sayfalar arasında gezinmek için
     kimlik = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36 OPR/67.0.3575.97 (Edition Campaign 34)'}                        # Websitesine istek yollarken kimlik bilgimizi sunuyoruz
     istek = requests.get(link)                                      # link'e istek göderiyoruz ve gelen veriyi kaydediyoruz

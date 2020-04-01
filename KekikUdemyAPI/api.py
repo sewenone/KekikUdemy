@@ -17,11 +17,11 @@ app = Flask(__name__)   #
 
 @app.route('/')
 def index():
-    return jsonify(Kurslar=Scraping(1), Zaman=strftime('%m-%d %H:%M:%S'))
+    return jsonify(Kurslar=Scraping(1), Zaman=strftime('%d/%m %H:%M:%S'))
 
 @app.route('/<int:hangi_sayfa>', methods=['GET'])
 def get_kullanici(hangi_sayfa):
-    return jsonify(Kurslar=Scraping(hangi_sayfa))
+    return jsonify(Kurslar=Scraping(hangi_sayfa), Zaman=strftime('%d/%m %H:%M:%S'))
 
 @app.errorhandler(404)
 def not_found(error):
